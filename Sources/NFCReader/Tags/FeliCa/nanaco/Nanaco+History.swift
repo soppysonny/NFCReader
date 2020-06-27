@@ -10,8 +10,8 @@ import Foundation
 public extension Nanaco {
     struct History: FeliCaService {
         /// Service code [lower byte, upper byte] (little-endian)
-        public static let serviceCode = Data([0x4F, 0x56])
-
+//        public static let serviceCode = Data([0x4F, 0x56])
+        public static let serviceCode = Data([0x8B, 0x61])
         /// Block list
         /// - Parameter numberOfBlocks: number of blocks (1-5)
         /// - Parameter serviceCodeIndex: index of service code
@@ -19,7 +19,7 @@ public extension Nanaco {
             (0..<UInt8(numberOfBlocks)).map { Block.two(blockNumber: $0, serviceCodeIndex: UInt8(serviceCodeIndex)) }
         }
 
-        public static var numberOfData = 5
+        public static var numberOfData = 6
 
         /// Raw binary data
         public let rawData: Data
@@ -55,6 +55,7 @@ public extension Nanaco {
         public init(data: Data) throws {
             try Self.validate(data: data)
             rawData = data
+            
             transactionType = try TransactionType(rawValue: data[0]).orThrow(TagErrors.dataInconsistency)
             amount = UInt32(bytes: data[1...4])
             balance = UInt32(bytes: data[5...8])
