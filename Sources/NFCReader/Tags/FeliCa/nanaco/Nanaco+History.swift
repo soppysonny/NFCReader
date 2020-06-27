@@ -11,7 +11,7 @@ public extension Nanaco {
     struct History: FeliCaService {
         /// Service code [lower byte, upper byte] (little-endian)
 //        public static let serviceCode = Data([0x4F, 0x56])
-        public static let serviceCode = Data([0x10, 0x0B])
+        public static let serviceCode = Data([0x0B, 0x10])
         /// Block list
         /// - Parameter numberOfBlocks: number of blocks (1-5)
         /// - Parameter serviceCodeIndex: index of service code
@@ -55,7 +55,8 @@ public extension Nanaco {
         public init(data: Data) throws {
             try Self.validate(data: data)
             rawData = data
-            
+            let str = String(data: data, encoding: .ascii);
+            print("data: ",str);
             transactionType = try TransactionType(rawValue: data[0]).orThrow(TagErrors.dataInconsistency)
             amount = UInt32(bytes: data[1...4])
             balance = UInt32(bytes: data[5...8])
