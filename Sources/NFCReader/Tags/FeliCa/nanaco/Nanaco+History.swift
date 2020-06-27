@@ -55,8 +55,14 @@ public extension Nanaco {
         public init(data: Data) throws {
             try Self.validate(data: data)
             rawData = data
-            let str = String(data: data, encoding: .ascii);
-            print("data: ",str);
+            let cardTypeByte = data[0];
+            let cardType = String(data: Data([cardTypeByte]), encoding: .ascii) as! String;
+            let versionByte = data[1]
+            let version = String(data: Data([versionByte]), encoding: .utf8) as! String;
+            let str = String(data: data, encoding: .ascii) as! String;
+            
+            print("cardType: ", cardType);
+            print("version: ", version);
             transactionType = try TransactionType(rawValue: data[0]).orThrow(TagErrors.dataInconsistency)
             amount = UInt32(bytes: data[1...4])
             balance = UInt32(bytes: data[5...8])
