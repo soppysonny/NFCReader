@@ -11,7 +11,7 @@ public extension Nanaco {
     struct History: FeliCaService {
         /// Service code [lower byte, upper byte] (little-endian)
 //        public static let serviceCode = Data([0x4F, 0x56])
-        public static let serviceCode = Data([0x61, 0x8b])
+        public static let serviceCode = Data([0x0b, 0x10])
         /// Block list
         /// - Parameter numberOfBlocks: number of blocks (1-5)
         /// - Parameter serviceCodeIndex: index of service code
