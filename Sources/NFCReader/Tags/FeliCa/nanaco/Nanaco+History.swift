@@ -60,9 +60,11 @@ public extension Nanaco {
             let versionByte = data[1]
             let version = String(data: Data([versionByte]), encoding: .utf8) as! String;
             let str = String(data: data, encoding: .ascii) as! String;
-            
+            let id = data.subdata(in: 2..<16);
+            let idStr = String(data: id, encoding: .ascii) as! String;
             print("cardType: ", cardType);
             print("version: ", version);
+            print("id: ", idStr);
             transactionType = try TransactionType(rawValue: data[0]).orThrow(TagErrors.dataInconsistency)
             amount = UInt32(bytes: data[1...4])
             balance = UInt32(bytes: data[5...8])
